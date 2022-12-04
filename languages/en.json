@@ -215,6 +215,9 @@
       }
     },
     "Applications": {
+      "LootCreator": {
+        "Title": "Loot Creator"
+      },
       "DropItem": {
         "Title": "Dropping Item",
         "Dropping": "You're dropping: {item_name}",

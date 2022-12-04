@@ -1,8 +1,8 @@
-import ItemEditorShell from './item-editor-shell.svelte';
 import { SvelteApplication } from '@typhonjs-fvtt/runtime/svelte/application';
+import ItemEditorShell from './item-editor-shell.svelte';
 
 export default class ItemEditor extends SvelteApplication {
-  
+
   constructor(item = false, options) {
     super({
       id: `item-pile-item-editor-${item.id}`,
@@ -18,7 +18,7 @@ export default class ItemEditor extends SvelteApplication {
       ...options
     });
   }
-  
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 500,
@@ -26,11 +26,11 @@ export default class ItemEditor extends SvelteApplication {
       classes: ["item-piles-app"]
     })
   }
-  
+
   static getActiveApp(id) {
     return Object.values(ui.windows).find(app => app.id === `item-pile-item-editor-${id}`)
   }
-  
+
   static async show(item = false, options = {}, dialogData = {}) {
     const app = this.getActiveApp(item.id);
     if (app) return app.render(false, { focus: true });

@@ -214,7 +214,7 @@ export default class ItemPileStore {
   }
 
   createItem(item) {
-    if (PileUtilities.isItemInvalid(this.actor, item)) return;
+    if (PileUtilities.isItemInvalid(item, this.actor)) return;
     const items = get(this.allItems);
     const deletedItems = items
       .filter(item => item.id === null)
@@ -233,7 +233,7 @@ export default class ItemPileStore {
   }
 
   deleteItem(item) {
-    if (PileUtilities.isItemInvalid(this.actor, item)) return;
+    if (PileUtilities.isItemInvalid(item, this.actor)) return;
     const items = get(this.allItems);
     const pileItem = items.find(pileItem => pileItem.id === item.id);
     if (!pileItem) return;

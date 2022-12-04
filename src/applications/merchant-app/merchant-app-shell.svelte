@@ -47,7 +47,8 @@
     }
 
     const item = await Item.implementation.fromDropData(data);
-    const validItem = await PileUtilities.checkItemType(merchant, item, {
+    const validItem = await PileUtilities.checkItemType(item, {
+      actor: merchant,
       errorText: "ITEM-PILES.Errors.DisallowedItemTrade",
       warningTitle: "ITEM-PILES.Dialogs.TypeWarning.Title",
       warningContent: "ITEM-PILES.Dialogs.TypeWarning.TradeContent"

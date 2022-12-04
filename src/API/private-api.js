@@ -1371,7 +1371,7 @@ export default class PrivateAPI {
 
     if (dropData.source === dropData.target) return;
 
-    const validItem = await PileUtilities.checkItemType(dropData.target, dropData.itemData.item);
+    const validItem = await PileUtilities.checkItemType(dropData.itemData.item, { actor: dropData.target });
     if (!validItem) return;
     dropData.itemData.item = validItem;
 
@@ -1425,7 +1425,7 @@ export default class PrivateAPI {
 
     if (dropData.target && PileUtilities.isItemPileMerchant(dropData.target)) return;
 
-    const validItem = await PileUtilities.checkItemType(dropData.target, dropData.itemData.item);
+    const validItem = await PileUtilities.checkItemType(dropData.itemData.item, { actor: dropData.target });
     if (!validItem) return;
     dropData.itemData.item = validItem;
 

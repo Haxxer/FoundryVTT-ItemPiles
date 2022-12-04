@@ -20,7 +20,7 @@
   import * as PileUtilities from "../../helpers/pile-utilities.js";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { writable } from "svelte/store";
-  import TextEditorDialog from "../dialogs/text-editor-dialog/text-editor-dialog.js";
+  import TextEditor from "../editors/text-editor/text-editor.js";
   import CustomDialog from "../components/CustomDialog.svelte";
   import MacroSelector from "../components/MacroSelector.svelte";
 
@@ -197,7 +197,7 @@
   }
 
   async function showDescriptionDialog() {
-    return TextEditorDialog.show(pileData.description, { id: "item-pile-text-editor-" + pileActor.id }).then((result) => {
+    return TextEditor.show(pileData.description, { id: "item-pile-text-editor-" + pileActor.id }).then((result) => {
       pileData.description = result || "";
     });
   }

@@ -1,8 +1,8 @@
-import CurrenciesEditorShell from './currencies-editor-shell.svelte';
 import { SvelteApplication } from '@typhonjs-fvtt/runtime/svelte/application';
+import CurrenciesEditorShell from './currencies-editor-shell.svelte';
 
 export default class CurrenciesEditor extends SvelteApplication {
-  
+
   constructor(data = false, options = {}) {
     super({
       svelte: {
@@ -16,7 +16,7 @@ export default class CurrenciesEditor extends SvelteApplication {
       ...options
     });
   }
-  
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize("ITEM-PILES.Applications.CurrenciesEditor.Title"),
@@ -25,7 +25,7 @@ export default class CurrenciesEditor extends SvelteApplication {
       classes: ["item-piles-app"]
     })
   }
-  
+
   static async show(data = false, options = {}) {
     return new Promise((resolve) => {
       options.resolve = resolve;

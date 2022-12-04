@@ -1,8 +1,8 @@
-import PricePresetEditorShell from "./price-preset-editor-shell.svelte";
 import { SvelteApplication } from '@typhonjs-fvtt/runtime/svelte/application';
+import PricePresetEditorShell from "./price-preset-editor-shell.svelte";
 
 export default class PricePresetEditor extends SvelteApplication {
-  
+
   constructor(prices, options) {
     super({
       id: `item-pile-price-preset-editor`,
@@ -18,7 +18,7 @@ export default class PricePresetEditor extends SvelteApplication {
       ...options
     });
   }
-  
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 500,
@@ -26,11 +26,11 @@ export default class PricePresetEditor extends SvelteApplication {
       classes: ["item-piles-app"]
     })
   }
-  
+
   static getActiveApp() {
     return Object.values(ui.windows).find(app => app.id === `item-pile-price-preset-editor`)
   }
-  
+
   static async show(prices, options = {}, dialogData = {}) {
     const app = this.getActiveApp();
     if (app) return app.render(false, { focus: true });

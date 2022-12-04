@@ -75,7 +75,7 @@ export default class MerchantStore extends ItemPileStore {
   }
 
   createItem(item) {
-    if (PileUtilities.isItemInvalid(this.actor, item)) return;
+    if (PileUtilities.isItemInvalid(item, this.actor)) return;
     const items = get(this.allItems);
     const itemClass = new this.ItemClass(this, item);
     itemClass.refreshPriceData();
@@ -85,7 +85,7 @@ export default class MerchantStore extends ItemPileStore {
   }
 
   deleteItem(item) {
-    if (PileUtilities.isItemInvalid(this.actor, item)) return;
+    if (PileUtilities.isItemInvalid(item, this.actor)) return;
     const items = get(this.allItems);
     const pileItem = items.find(pileItem => pileItem.id === item.id);
     if (!pileItem) return;

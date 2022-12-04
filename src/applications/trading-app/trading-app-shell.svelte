@@ -43,7 +43,8 @@
       throw Helpers.custom_error(`You cannot drop items into the trade UI from a different actor than ${store.leftTraderActor.name}!`)
     }
 
-    const validItem = await PileUtilities.checkItemType(store.rightTraderActor, item, {
+    const validItem = await PileUtilities.checkItemType(item, {
+      actor: store.rightTraderActor,
       errorText: "ITEM-PILES.Errors.DisallowedItemTrade",
       warningTitle: "ITEM-PILES.Dialogs.TypeWarning.Title",
       warningContent: "ITEM-PILES.Dialogs.TypeWarning.TradeContent"

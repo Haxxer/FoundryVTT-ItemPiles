@@ -3,7 +3,7 @@
   import Tabs from "../components/Tabs.svelte";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import SliderInput from "../components/SliderInput.svelte";
-  import TextEditorDialog from "../dialogs/text-editor-dialog/text-editor-dialog.js";
+  import TextEditor from "../editors/text-editor/text-editor.js";
   import { get } from "svelte/store";
   import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component";
 
@@ -37,7 +37,7 @@
   }
 
   function showDescriptionEditor() {
-    return TextEditorDialog.show(description, { id: "item-pile-text-editor-" + store.actor.id }).then((result) => {
+    return TextEditor.show(description, { id: "item-pile-text-editor-" + store.actor.id }).then((result) => {
       store.pileData.update((pileData) => {
         pileData.description = result || "";
         return pileData;

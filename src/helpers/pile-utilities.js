@@ -89,9 +89,9 @@ export function shouldItemPileBeDeleted(targetUuid) {
 
 export function getActorItems(target, { itemFilters = false, getItemCurrencies = false } = {}) {
   const actor = Utilities.getActor(target);
-  const actorItemFilters = itemFilters ? cleanItemFilters(itemFilters) : getActorItemFilters(actor);
+  const actorItemFilters = itemFilters ? cleanItemFilters(itemFilters) : getItemFilters(actor);
   const currencies = getActorCurrencies(actor, { getAll: true }).map(entry => entry.id);
-  return actor.items.filter(item => (getItemCurrencies || currencies.indexOf(item.id) === -1) && !isItemInvalid(actor, item, actorItemFilters));
+  return actor.items.filter(item => (getItemCurrencies || currencies.indexOf(item.id) === -1) && !isItemInvalid(item, actor, actorItemFilters));
 }
 
 export function getActorCurrencies(target, { forActor = false, currencyList = false, getAll = false } = {}) {
@@ -141,7 +141,7 @@ export function getCurrencyList(target = false, pileData = false) {
 }
 
 
-export function getActorItemFilters(target, pileData = false) {
+export function getItemFilters(target, pileData = false) {
   if (!target) return cleanItemFilters(game.itempiles.API.ITEM_FILTERS);
   const targetActor = Utilities.getActor(target);
   pileData = getActorFlagData(targetActor, pileData);
@@ -157,8 +157,8 @@ export function cleanItemFilters(itemFilters) {
   }) : [];
 }
 
-export function isItemInvalid(targetActor, item, itemFilters = false) {
-  const pileItemFilters = itemFilters ? itemFilters : getActorItemFilters(targetActor)
+export function isItemInvalid(item, targetActor = false, itemFilters = false) {
+  const pileItemFilters = itemFilters ? itemFilters : getItemFilters(targetActor)
   const itemData = item instanceof Item ? item.toObject() : item;
   for (const filter of pileItemFilters) {
     if (!hasProperty(itemData, filter.path)) continue;
@@ -170,14 +170,15 @@ export function isItemInvalid(targetActor, item, itemFilters = false) {
   return false;
 }
 
-export async function checkItemType(targetActor, item, {
+export async function checkItemType(item, {
+  actor = false,
   errorText = "ITEM-PILES.Errors.DisallowedItemDrop",
   warningTitle = "ITEM-PILES.Dialogs.TypeWarning.Title",
   warningContent = "ITEM-PILES.Dialogs.TypeWarning.DropContent",
   runTransformer = true
 } = {}) {
 
-  const disallowedType = isItemInvalid(targetActor, item);
+  const disallowedType = isItemInvalid(item, actor);
   if (disallowedType) {
     if (!game.user.isGM) {
       return Helpers.custom_warning(game.i18n.format(errorText, { type: disallowedType }), true)
@@ -187,7 +188,7 @@ export async function checkItemType(targetActor, item, {
       item = await SYSTEMS.DATA.ITEM_TRANSFORMER(item);
     }
 
-    const newDisallowedType = isItemInvalid(targetActor, item);
+    const newDisallowedType = isItemInvalid(item, actor);
 
     if (newDisallowedType && !hotkeyState.shiftDown) {
       const force = await Dialog.confirm({

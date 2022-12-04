@@ -11,6 +11,7 @@ import ChatAPI from "./API/chat-api.js";
 import PrivateAPI from "./API/private-api.js";
 import HOOKS from "./constants/hooks.js";
 import * as Helpers from "./helpers/helpers.js";
+import LootCreatorApp from "./applications/loot-creator/loot-creator-app.js";
 
 Hooks.once("init", async () => {
   registerHotkeysPre();
@@ -56,6 +57,8 @@ Hooks.once("ready", () => {
     ChatAPI.disablePastTradingButtons();
 
     Hooks.callAll(HOOKS.READY);
+
+    LootCreatorApp.show();
 
   }, 100);
 

@@ -1,8 +1,8 @@
-import ItemSimilaritiesShell from './item-similarities-editor.svelte';
 import { SvelteApplication } from '@typhonjs-fvtt/runtime/svelte/application';
+import ItemSimilaritiesShell from './item-similarities-editor.svelte';
 
 export default class ItemSimilaritiesEditor extends SvelteApplication {
-  
+
   constructor(itemSimilarities, options) {
     super({
       svelte: {
@@ -16,7 +16,7 @@ export default class ItemSimilaritiesEditor extends SvelteApplication {
       ...options
     });
   }
-  
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize("ITEM-PILES.Applications.SimilaritiesEditor.Title"),
@@ -25,7 +25,7 @@ export default class ItemSimilaritiesEditor extends SvelteApplication {
       classes: ["item-piles-app"]
     })
   }
-  
+
   static async show(itemSimilarities, options = {}) {
     return new Promise(resolve => {
       options.resolve = resolve;

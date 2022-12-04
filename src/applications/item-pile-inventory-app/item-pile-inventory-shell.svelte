@@ -5,13 +5,13 @@
   import { ApplicationShell } from '@typhonjs-fvtt/runtime/svelte/component/core';
 
   import ItemList from "./ItemList.svelte";
+  import CategorizedItemList from "./CategorizedItemList.svelte";
   import CurrencyList from "./CurrencyList.svelte";
   import ActorPicker from "./ActorPicker.svelte";
 
   import * as SharingUtilities from "../../helpers/sharing-utilities.js";
   import PrivateAPI from "../../API/private-api.js";
   import ItemPileStore from "../../stores/item-pile-store.js";
-  import CategorizedItemList from "./CategorizedItemList.svelte";
 
   const { application } = getContext('external');
 
