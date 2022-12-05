@@ -5,6 +5,7 @@ import ItemPileConfig from "./applications/item-pile-config/item-pile-config.js"
 import ItemEditor from "./applications/editors/item-editor/item-editor.js";
 import CONSTANTS from "./constants/constants.js";
 import UserSelectDialog from "./applications/dialogs/user-select-dialog/user-select-dialog.js";
+import LootCreatorApp from "./applications/loot-creator/loot-creator-app.js";
 
 export default function registerUIOverrides() {
   Hooks.on("renderPlayerList", addTradeButton);
@@ -12,6 +13,7 @@ export default function registerUIOverrides() {
   Hooks.on("getActorSheetHeaderButtons", insertActorHeaderButtons);
   Hooks.on("getItemSheetHeaderButtons", insertItemHeaderButtons);
   Hooks.on("renderSidebarTab", hideTemporaryItems);
+  Hooks.on("changeSidebarTab", addCreateLootButton);
   Hooks.on("renderTokenHUD", renderPileHUD);
 }
 
@@ -28,6 +30,16 @@ function hideTemporaryItems(sidebar) {
       }
       element.find(`.directory-item[data-document-id="${item.id}"]`).remove();
     });
+}
+
+function addCreateLootButton(sidebar) {
+  if (sidebar.tabName !== "actors") return;
+  const footer = sidebar.element.find(".directory-footer");
+  const button = $(`<div class="flexrow"><button>Item Piles Loot Creator</button></div>`);
+  footer.append(button)
+  button.click(() => {
+    LootCreatorApp.show();
+  });
 }
 
 function addTradeButton(app, html) {
