@@ -3,9 +3,11 @@
   import { localize } from '@typhonjs-fvtt/runtime/svelte/helper';
   import { ApplicationShell } from '@typhonjs-fvtt/runtime/svelte/component/core';
   import * as Helpers from "../../helpers/helpers.js";
+  import * as Utilities from "../../helpers/utilities.js";
   import * as PileUtilities from "../../helpers/pile-utilities.js";
   import { writable } from "svelte/store";
   import LootEntry from "./LootEntry.svelte";
+  import DropZone from "../components/DropZone.svelte";
 
   const { application } = getContext('external');
 
@@ -32,8 +34,20 @@
     });
     if (!validItem) return;
 
-    items.update(value => {
-      value.push(validItem);
+    displayedItemEntries.update(value => {
+      const itemData = validItem.toObject();
+      const foundItem = Utilities.findSimilarItem(value, itemData);
+      if (foundItem) {
+        foundItem.quantity++;
+      } else {
+        itemData.id = randomID();
+        value.push({
+          ...itemData,
+          item: validItem,
+          quantity: 1
+        });
+        value.sort((a, b) => b.name > a.name ? -1 : 1);
+      }
       return value;
     });
 
@@ -186,7 +200,7 @@ The upper floor of the tower contains 10 pieces of jewelry (250 gp each) in a re
 <svelte:options accessors={true}/>
 
 <ApplicationShell bind:elementRoot>
-  <div>
+  <DropZone callback={dropData}>
     <div class:item-piles-bottom-divider={$displayedItemEntries.length || $displayedCurrencyEntries.length}>
       <textarea bind:value={originalText} style="height:125px;"></textarea>
       <button type="button" on:click={() => { populateLoot() }}>Evaluate</button>
@@ -207,6 +221,11 @@ The upper floor of the tower contains 10 pieces of jewelry (250 gp each) in a re
           <LootEntry bind:entry={entry}/>
         {/each}
       {/if}
+      {#if $displayedItemEntries.length || $displayedCurrencyEntries.length}
+        <button type="button" on:click={() => { $displayedItemEntries = []; $displayedCurrencyEntries = []; }}>
+          <i class="fas fa-trash"></i> Clear All
+        </button>
+      {/if}
     </div>
-  </div>
+  </DropZone>
 </ApplicationShell>
